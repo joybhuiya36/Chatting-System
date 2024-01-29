@@ -22,9 +22,9 @@ class ChatRoomService {
       .populate("users");
   }
   static async findAllChats(user) {
-    return await ChatRoomModel.find({ users: { $in: [user] } }).populate(
-      "users"
-    );
+    return await ChatRoomModel.find({ users: { $in: [user] } })
+      .populate("users")
+      .sort({ updatedAt: 1 });
   }
   static async createRoom(user1, user2, roomId) {
     if (await this.isChatRoomExistbyUser(user1, user2))
