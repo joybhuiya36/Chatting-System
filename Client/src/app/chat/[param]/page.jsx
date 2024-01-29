@@ -35,6 +35,7 @@ const Chat = () => {
   }, [chatRoomId]);
   useEffect(() => {
     socket.on("receive_message", (data) => {
+      console.log("rec");
       setChats((prevChats) => [
         ...prevChats,
         {
