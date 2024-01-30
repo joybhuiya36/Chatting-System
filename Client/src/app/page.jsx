@@ -27,10 +27,9 @@ const App = () => {
   return (
     <div
       style={{
-        height: "100vh",
         textAlign: "center",
         alignSelf: "center",
-        marginTop: "40%",
+        marginTop: "20%",
       }}
     >
       <h2>Enter Your User Number</h2>
