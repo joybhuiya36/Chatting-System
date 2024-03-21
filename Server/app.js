@@ -6,6 +6,8 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const socketController = require("./socket/socketController");
 const databaseConnection = require("./config/database");
+const authRoute = require("./routes/authRoute");
+const userRoute = require("./routes/userRoute");
 const ChatRoomRoutes = require("./routes/chatRoomRoutes");
 
 dotenv.config();
@@ -25,6 +27,8 @@ const io = new Server(server, {
 });
 io.on("connection", socketController);
 
+app.use("/auth", authRoute);
+app.use("/user", userRoute);
 app.use("/chat", ChatRoomRoutes);
 
 app.use((err, req, res, next) => {

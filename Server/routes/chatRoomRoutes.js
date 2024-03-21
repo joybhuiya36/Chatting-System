@@ -1,5 +1,5 @@
 const express = require("express");
-const ChatRoomController = require("../controller/chatRoomController/chatRoomController");
+const ChatRoomController = require("../controller/chatRoomController");
 const route = express();
 
 route.get("/view/:roomId", ChatRoomController.viewChat);

@@ -1,47 +1,49 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "./style.scss"
+import axiosIntance from "@/utils/axiosInstance";
 
 const App = () => {
-  const [id, setId] = useState("");
   const navigate = useRouter();
+  const [email,setEmail]=useState('');
+  const [password,setPassword]=useState('');
 
-  const inputStyle = {
-    padding: "8px",
-    marginRight: "8px",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
-    fontSize: "14px",
-  };
-
-  const buttonStyle = {
-    padding: "10px 16px",
-    border: "none",
-    backgroundColor: "#3498db",
-    color: "#fff",
-    borderRadius: "4px",
-    cursor: "pointer",
-    fontSize: "16px",
+  const onSubmit = () => {
+    console.log(email,password);
+    axiosIntance
+      .post("/auth/login", {email,password})
+      .then((response) => {
+        toast.success("Logged in Successfully!");
+        const token = response.data.data.token;
+        const id = response.data.data.user._id;
+        const name = response.data.data.user.name;
+        const email = response.data.data.email;
+        localStorage.setItem("token", token);
+        localStorage.setItem("id", id);
+        axiosIntance.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${token}`;
+        navigate.push(`/chat/${id}`);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
   return (
-    <div
-      style={{
-        textAlign: "center",
-        alignSelf: "center",
-        marginTop: "20%",
-      }}
-    >
-      <h2>Enter Your User Number</h2>
-      <input
-        type="text"
-        value={id}
-        onChange={(e) => setId(e.target.value)}
-        style={inputStyle}
-      />
-      <button onClick={() => navigate.push(`/chat/${id}`)} style={buttonStyle}>
-        Go to Chatbox
-      </button>
+    <div>
+      <div className="login">
+        <div className="login__content">
+        <h2 className="login__title">ChatBox</h2>
+        <label htmlFor="email" className="login__label">Email:</label>
+        <input type="text" className="login__input" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+        <label htmlFor="password" className="login__label">Password:</label>
+        <input type="password" className="login__input" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+        <button onClick={onSubmit} className="login__button">Sign In</button>
+        </div>
+      </div>
     </div>
   );
 };
