@@ -1,0 +1,31 @@
+.chats {
+    background-color: white;
+    height: 100vh;
+    &__search {
+        margin: 0 auto;
+        width: fit-content;
+        padding: 20px;
+        &-input {
+            width: 400px;
+            height: 40px;
+            border: 2px solid gray;
+            border-radius: 10px;
+            font-size: 15px;
+            padding-left: 15px;
+        }
+    }
+    &__wrapper {
+        display: flex;
+        width: 100%;
+    }
+    &__left {
+        border-right: 1px solid black;
+        width: 30%;
+    }
+    &__right {
+        margin: 0 20px;
+        width: 70%;
+        height: 76vh;
+        overflow: auto;
+    }
+}

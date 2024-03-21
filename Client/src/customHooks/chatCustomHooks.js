@@ -33,6 +33,9 @@ const useChat = () => {
       .patch("/chat/edit", { roomId, userId, message })
       .then((res) => getChats(roomId));
   };
+  const getUsers=()=>{
+    axiosIntance.get("/user/all").then((res)=>console.log(res.data.data))
+  }
   return {
     createRoom,
     allChats,
@@ -40,6 +43,7 @@ const useChat = () => {
     chatMessages,
     getChats,
     sendMessage,
+    getUsers
   };
 };
 

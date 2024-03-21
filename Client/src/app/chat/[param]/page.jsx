@@ -1,8 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import useChat from "@/customHooks/chatCustomHooks";
 import { useParams } from "next/navigation";
 import io from "socket.io-client";
 import React, { useEffect, useRef, useState } from "react";
+import './index.scss'
+import axiosIntance from "@/utils/axiosInstance";
 
 const socket = io.connect(process.env.NEXT_PUBLIC_BACKEND_URL);
 
@@ -15,6 +18,7 @@ const Chat = () => {
     chatMessages,
     getChats,
     sendMessage,
+    getUsers
   } = useChat();
   const [chatRoomId, setchatRoomId] = useState(null);
   const [inputMessage, setInputMessage] = useState("");
@@ -81,36 +85,37 @@ const Chat = () => {
     sendMessage(chatRoomId, param, inputMessage);
     setInputMessage("");
   };
-
+const onSearch=(e)=>{
+  setRecipient(e.target.value);
+getUsers();
+}
   return (
-    <div>
-      <input type="text" onChange={(e) => setRecipient(e.target.value)} />
-      <button
+    <div className="chats">
+      <div className="chats__search"><input type="text" onChange={(e) => onSearch(e)} className="chats__search-input"/></div>
+      {/* <button
         onClick={() => {
           createRoom(param, recipient);
           setRecipient("");
         }}
       >
         Start Chat
-      </button>
-      <div style={{ display: "flex", width: "100%" }}>
+      </button> */}
+      <div className="chats__wrapper">
         <div
-          style={{
-            borderRight: "1px solid black",
-            width: "30%",
-          }}
+          className="chats__left"
         >
-          {allChats?.map((chat) => (
+          {allChats?.map((chat,index) => (
             <div
+            key={index}
               style={{ margin: "20px", cursor: "pointer" }}
               onClick={() => {
                 handleChatRoom(chat?.roomId);
               }}
             >
               {chat?.users?.map(
-                (user) =>
+                (user,index) =>
                   user?._id != param && (
-                    <div
+                    <div key={index}
                       style={{
                         display: "flex",
                         flexDirection: "row",
@@ -123,6 +128,7 @@ const Chat = () => {
                     >
                       <img
                         src={user?.image}
+                        alt="img"
                         style={{
                           height: "50px",
                           width: "50px",
@@ -138,22 +144,18 @@ const Chat = () => {
           ))}
         </div>
         <div
-          style={{
-            margin: "0 20px",
-            width: "70%",
-            height: "85vh",
-            overflow: "auto",
-          }}
+         className="chats__right"
           ref={chatContainerRef}
         >
-          {chats?.map((chat) => (
-            <div
+          {chats?.map((chat,index) => (
+            <div key={index}
               style={{
                 display: "flex",
                 gap: "8px",
                 margin: " 3px 0",
                 justifyContent:
                   param === chat?.user?._id ? "flex-end" : "flex-start",
+                  paddingRight: "15px"
               }}
             >
               <div

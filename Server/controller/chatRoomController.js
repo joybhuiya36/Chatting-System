@@ -1,6 +1,6 @@
-const { isUserExist } = require("../../service/userService/userService");
-const { success, failure } = require("../../utils/responeMessage");
-const ChatRoomService = require("../../service/chatRoomService/chatRoomService");
+const { isUserExist } = require("../service/userService");
+const { success, failure } = require("../utils/responeMessage");
+const ChatRoomService = require("../service/chatRoomService");
 const { default: mongoose } = require("mongoose");
 
 class ChatRoomController {

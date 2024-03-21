@@ -1,0 +1,43 @@
+.login {
+  margin: auto;
+  width: 550px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &__content {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  background-color: rgba(255, 255, 255, 0.322);
+  backdrop-filter: blur(10px); 
+  border-radius: 10px;
+  }
+  &__title {
+    font-size: 40px;
+    color: rgb(220, 220, 220);
+    margin-bottom: 30px;
+  }
+  &__label {
+    font-size: 18px;
+    margin-bottom: 6px;
+    color: white;
+  }
+  &__input {
+    padding-left: 10px;
+    height: 34px;
+    margin-bottom: 20px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background-color: rgb(229, 238, 230);
+  }
+  &__button {
+    height: 40px;
+    border: none;
+    background-color: rgb(0, 75, 75);
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+  }
+}

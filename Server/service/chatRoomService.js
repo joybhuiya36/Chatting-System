@@ -1,4 +1,4 @@
-const ChatRoomModel = require("../../model/chatRoomModel/chatRoomModel");
+const ChatRoomModel = require("../model/chatRoomModel");
 
 class ChatRoomService {
   static async isChatRoomExistbyUser(user1, user2) {

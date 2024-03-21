@@ -1,4 +1,4 @@
-const UserModel = require("../../model/userModel/userModel");
+const UserModel = require("../model/userModel");
 
 class UserService {
   static async isUserExist(userId) {
