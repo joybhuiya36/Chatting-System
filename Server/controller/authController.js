@@ -41,17 +41,16 @@ class Auth {
     }
   }
   async login(req, res) {
-    console.log("yes");
     const { email, password } = req.body;
     const auth = await authModel
       .findOne({ email: email })
       .populate("user", "-__v");
     if (!auth) {
-      return res.status(200).send(failure("User isn't Found!"));
+      return res.status(404).send(failure("User isn't Found!"));
     }
     const rslt = await bcrypt.compare(password, auth.password);
     if (!rslt) {
-      return res.status(200).send(failure("Invalid Credentials"));
+      return res.status(400).send(failure("Invalid Credentials"));
     }
     const responseData = auth.toObject();
     delete responseData._id;

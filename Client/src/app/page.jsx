@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <div>
-      <ToastContainer />d
+      <ToastContainer />
       <div className="login">
         <div className="login__content">
           <h2 className="login__title">ChatBox</h2>
