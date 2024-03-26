@@ -1,9 +1,12 @@
 * {
   margin: 0;
 }
+html,
 body {
   background-color: cadetblue;
-  background-image: url('/bg3.jpg');
+  background-image: url("/bg3.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  height: 100%;
+  overflow: hidden;
 }

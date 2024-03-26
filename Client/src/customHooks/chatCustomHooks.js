@@ -4,46 +4,54 @@ const { useState } = require("react");
 const useChat = () => {
   const [allChats, setAllChats] = useState([]);
   const [chatMessages, setChatMessages] = useState([]);
+  const [userSearchResult, setUserSearchResult] = useState([]);
 
   const createRoom = (user1, user2) => {
     axiosIntance
       .post("/chat/create", { user1, user2 })
       .then((res) => {
-        console.log("Successfully Created");
-        getAllChats(user1);
+        console.log("Successfully Chatroom is Created");
+        getChatsWithAll(user1);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  const getAllChats = (user) => {
+  const getChatsWithAll = (user) => {
     axiosIntance
       .get(`/chat/view-all/${user}`)
       .then((res) => setAllChats(res.data.data))
       .catch((err) => setAllChats([]));
   };
-  const getChats = (roomId) => {
+  const getOneChat = (roomId) => {
     axiosIntance
       .get(`/chat/view/${roomId}`)
-      .then((res) => setChatMessages(res.data.data.messages))
+      .then((res) => {
+        setChatMessages(res.data.data.messages);
+      })
       .catch((error) => {});
   };
   const sendMessage = (roomId, userId, message) => {
-    axiosIntance
-      .patch("/chat/edit", { roomId, userId, message })
-      .then((res) => getChats(roomId));
+    axiosIntance.patch("/chat/edit", { roomId, userId, message });
   };
-  const getUsers=()=>{
-    axiosIntance.get("/user/all").then((res)=>console.log(res.data.data))
-  }
+  const searchUsers = (user) => {
+    if (user.length == 0) {
+      setUserSearchResult([]);
+      return;
+    }
+    axiosIntance
+      .get(`/user/search/${user}`)
+      .then((res) => setUserSearchResult(res.data.data));
+  };
   return {
     createRoom,
     allChats,
-    getAllChats,
+    getChatsWithAll,
     chatMessages,
-    getChats,
+    getOneChat,
     sendMessage,
-    getUsers
+    searchUsers,
+    userSearchResult,
   };
 };
 

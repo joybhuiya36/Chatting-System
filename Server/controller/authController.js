@@ -52,6 +52,7 @@ class Auth {
     if (!rslt) {
       return res.status(400).send(failure("Invalid Credentials"));
     }
+    console.log(auth);
     const responseData = auth.toObject();
     delete responseData._id;
     delete responseData.password;

@@ -9,6 +9,12 @@ class ChatRoomController {
       const { user1, user2 } = req.body;
       if (!isUserExist(user1) | !isUserExist(user2))
         return res.status(404).send(failure("User isn't Found"));
+      const isRoomExist = await ChatRoomService.isChatRoomExistbyUser(
+        user1,
+        user2
+      );
+      if (isRoomExist)
+        return res.status(400).send(failure("Chat Room exists already"));
       const roomId = new mongoose.Types.ObjectId();
       const chatRoom = await ChatRoomService.createRoom(user1, user2, roomId);
       if (chatRoom.success)
